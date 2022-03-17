@@ -14,21 +14,33 @@ import java.util.List;
  */
 public class Lambda_02_Test {
 
+	
+	
+	
     // tag::PersonToAccountMapper[]
     interface PersonToAccountMapper {
-        Account map(Person p);
+        Account map(Person person);
+        
     }
     // end::PersonToAccountMapper[]
 
+    
+    
     // tag::map[]
     private List<Account> map(List<Person> personList, PersonToAccountMapper mapper) {
+    	
         List<Account> accounts = new ArrayList<>();
-        personList.forEach(p -> accounts.add(mapper.map(p)));
+        
+        personList.forEach(person -> accounts.add(mapper.map(person)));
+        
         return accounts;
     }
     // end::map[]
 
 
+    
+    
+    
     // tag::test_map_person_to_account[]
     @Test
     public void test_map_person_to_account() throws Exception {
@@ -37,8 +49,15 @@ public class Lambda_02_Test {
 
         // TODO transformer la liste de personnes en liste de comptes
         // TODO tous les objets comptes ont un solde à 100 par défaut
-        List<Account> result = map(personList, null);
+        
+        PersonToAccountMapper mapper = (person) -> new Account(person, 100);
+        
+        List<Account> result = map(personList, mapper);
 
+        
+        
+        
+        
         assert result.size() == personList.size();
         for (Account account : result) {
             assert account.getBalance().equals(100);
@@ -46,4 +65,7 @@ public class Lambda_02_Test {
         }
     }
     // end::test_map_person_to_account[]
+    
+    
+    
 }
